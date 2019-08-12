@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
 const userRoutes = require('./src/routes/userRoutes');
+const postRoutes = require('./src/routes/postRoutes');
 
 const app = express();
 
@@ -18,5 +19,6 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/shirk", {useNew
     .catch(err => console.log(err));
 
 userRoutes(app);
+postRoutes(app);
 
 app.listen('3333', console.log('Listening on port 3333'));
