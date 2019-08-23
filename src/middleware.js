@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-import { UserSchema } from "./src/models/userModel";
+import { UserSchema } from "./models/userModel";
 import mongoose from "mongoose";
 const User = mongoose.model("user", UserSchema);
 
