@@ -17,14 +17,18 @@ export const UserSchema = new Schema({
         required: 'Please enter an email address.',
         unique: true
     },
-    userName: {
+    username: {
         type: String,
         require: true
     },
     hashPassword: {
         type: String,
         required: true
-    }
+    },
+    channels: [{
+        type: Schema.Types.ObjectId,
+        ref: 'channel'
+    }]
 });
 
 UserSchema.methods.comparePassword = (password, hashPassword) => {
