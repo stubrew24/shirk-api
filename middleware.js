@@ -1,9 +1,6 @@
 const jwt = require("jsonwebtoken");
-import { UserSchema } from "./models/userModel";
-import mongoose from "mongoose";
-const User = mongoose.model("user", UserSchema);
 
-const withAuth = function(req, res, next) {
+export const withAuth = function(req, res, next) {
   const token =
     req.body.token ||
     req.query.token ||
@@ -22,4 +19,3 @@ const withAuth = function(req, res, next) {
     });
   }
 };
-module.exports = withAuth;
