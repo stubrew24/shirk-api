@@ -7,7 +7,7 @@ import {
   getChannel
 } from "../controllers/channelController";
 
-const routes = app => {
+export const channelRoutes = app => {
   app
     .route("/channels")
     .get(getPublicChannels)
@@ -21,5 +21,3 @@ const routes = app => {
 
   app.route("/leavechannel").post(leaveChannel);
 };
-
-module.exports = routes;

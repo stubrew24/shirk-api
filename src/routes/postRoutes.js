@@ -1,12 +1,17 @@
-import {addPost, getPosts, showPost} from "../controllers/postController";
+import {
+  addPost,
+  channelPosts,
+  getAllPosts,
+  showPost
+} from "../controllers/postController";
 
-const routes = app => {
-    app.route('/posts')
-        .get(getPosts)
-        .post(addPost)
+export const postRoutes = app => {
+  app
+    .route("/posts")
+    .get(getAllPosts)
+    .post(addPost);
 
-    app.route('/posts/:postId')
-        .get(showPost)
+  app.route("/posts/:channelId").get(channelPosts);
+
+  app.route("/posts/:postId").get(showPost);
 };
-
-module.exports = routes;

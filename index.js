@@ -5,12 +5,12 @@ const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const { withAuth } = require("./middleware");
+import { withAuth } from "./middleware";
 
-const userRoutes = require("./src/routes/userRoutes");
-const postRoutes = require("./src/routes/postRoutes");
-const authRoutes = require("./src/routes/authRoutes");
-const channelRoutes = require("./src/routes/channelRoutes");
+import { userRoutes } from "./src/routes/userRoutes";
+import { postRoutes } from "./src/routes/postRoutes";
+import { authRoutes } from "./src/routes/authRoutes";
+import { channelRoutes } from "./src/routes/channelRoutes";
 import { UserSchema } from "./src/models/userModel";
 
 const User = mongoose.model("user", UserSchema);
