@@ -1,5 +1,5 @@
 import { logout, userLogin } from "../controllers/authController";
-import { addUser } from "../controllers/userController";
+import { addUser, uploadAvatar } from "../controllers/userController";
 const multer = require("multer");
 
 var storage = multer.diskStorage({
@@ -17,4 +17,5 @@ export const authRoutes = app => {
   app.route("/login").post(userLogin);
   app.route("/register").post(upload, addUser, userLogin);
   app.route("/logout").get(logout);
+  app.route("/uploadavatar").post(upload, uploadAvatar);
 };

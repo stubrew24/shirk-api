@@ -35,3 +35,22 @@ export const showUser = (req, res) => {
       res.json(user);
     });
 };
+
+export const uploadAvatar = (req, res) => {
+  res.json({ avatar: req.file.filename });
+};
+
+export const updateUser = async (req, res) => {
+  const user = await User.findOne({ _id: req.params.userId });
+  user.username = req.body.username;
+  user.avatar = req.body.avatar;
+  await user.save();
+  console.log(user);
+  User.findOne({ _id: req.params.userId })
+    .populate({ path: "channels", select: ["name", "description"] })
+    .exec((err, user) => {
+      if (err) res.status(400).json({ error: err });
+      user.hashPassword = undefined;
+      res.json(user);
+    });
+};
