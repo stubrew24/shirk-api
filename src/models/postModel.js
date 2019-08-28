@@ -8,8 +8,8 @@ export const PostSchema = new Schema({
     required: true
   },
   userId: {
-    type: String,
-    required: true
+    type: Schema.Types.ObjectId,
+    ref: "user"
   },
   channelId: {
     type: String,

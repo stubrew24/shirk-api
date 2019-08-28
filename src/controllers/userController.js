@@ -17,6 +17,7 @@ export const getUsers = (req, res) => {
 export const addUser = (req, res, next) => {
   const newUser = new User(req.body);
   newUser.hashPassword = bcrypt.hashSync(req.body.password, 10);
+  newUser.avatar = req.file.filename;
 
   newUser.save((err, user) => {
     if (err) res.status(400).json({ error: err });

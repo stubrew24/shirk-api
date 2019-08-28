@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
 
 export const withAuth = function(req, res, next) {
   const token =
@@ -19,3 +20,9 @@ export const withAuth = function(req, res, next) {
     });
   }
 };
+
+export const upload = multer({
+  limits: {
+    fileSize: 4 * 1024 * 1024
+  }
+});

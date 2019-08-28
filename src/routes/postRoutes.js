@@ -13,5 +13,5 @@ export const postRoutes = app => {
 
   app.route("/posts/:channelId").get(channelPosts);
 
-  app.route("/posts/:postId").get(showPost);
+  app.route("/post/:postId").get(showPost);
 };

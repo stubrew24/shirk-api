@@ -13,15 +13,23 @@ import { authRoutes } from "./src/routes/authRoutes";
 import { channelRoutes } from "./src/routes/channelRoutes";
 import { UserSchema } from "./src/models/userModel";
 
+import { PostSchema } from "./src/models/userModel";
+
 const User = mongoose.model("user", UserSchema);
 const app = express();
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
 const port = process.env.now ? 8080 : 4000;
+const Post = mongoose.model("post", PostSchema);
+
+let interval;
 
 app.use(helmet());
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use("/uploads", express.static("uploads"));
 
 app.get("/", (req, res) => {
   res.send("Hello World");
@@ -40,9 +48,34 @@ mongoose
   .then(() => console.log("Connected to mongoDB"))
   .catch(err => console.log(err));
 
+io.on("connection", socket => {
+  console.log("a user connected");
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+  socket.on("chat message", msg => {
+    console.log("message:", msg);
+  });
+  socket.on("typing", (username, id) => {
+    clearInterval(interval);
+    io.emit("typing", username, id);
+    interval = setInterval(() => {
+      io.emit("typing", null);
+    }, 2000);
+  });
+  socket.on("get messages", id => {
+    Post.find({ channelId: id })
+      .populate({ path: "userId", select: ["username", "avatar"] })
+      .exec((err, posts) => {
+        if (err) return { error: err };
+        io.emit("posts", posts, id);
+      });
+  });
+});
+
 userRoutes(app);
 postRoutes(app);
 authRoutes(app);
 channelRoutes(app);
 
-app.listen(port);
+http.listen(port);
