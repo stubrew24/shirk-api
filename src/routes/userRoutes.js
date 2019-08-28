@@ -1,4 +1,9 @@
-import { getUsers, showUser, updateUser } from "../controllers/userController";
+import {
+  getUsers,
+  showUser,
+  updateUser,
+  validate
+} from "../controllers/userController";
 
 export const userRoutes = app => {
   app.route("/users").get(getUsers);
@@ -6,4 +11,5 @@ export const userRoutes = app => {
     .route("/users/:userId")
     .get(showUser)
     .put(updateUser);
+  app.route("/validate").post(validate);
 };

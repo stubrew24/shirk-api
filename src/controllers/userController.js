@@ -15,14 +15,17 @@ export const getUsers = (req, res) => {
 };
 
 export const addUser = (req, res, next) => {
+  console.log(req.body);
   const newUser = new User(req.body);
   newUser.hashPassword = bcrypt.hashSync(req.body.password, 10);
-  newUser.avatar = req.file.filename;
 
   newUser.save((err, user) => {
-    if (err) res.status(400).json({ error: err });
-    req.username = user.username;
-    next();
+    if (err) {
+      res.status(400).json(err);
+    } else {
+      req.username = user.username;
+      next();
+    }
   });
 };
 
@@ -53,4 +56,19 @@ export const updateUser = async (req, res) => {
       user.hashPassword = undefined;
       res.json(user);
     });
+};
+
+export const validate = async (req, res) => {
+  const checks = {};
+  await User.findOne({ username: req.body.username }, (err, user) => {
+    if (user) {
+      checks.username = "Username already taken.";
+    }
+  });
+  await User.findOne({ email: req.body.email }, (err, user) => {
+    if (user) {
+      checks.email = "Email address already taken.";
+    }
+  });
+  await res.json(checks);
 };

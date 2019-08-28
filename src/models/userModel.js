@@ -19,7 +19,8 @@ export const UserSchema = new Schema({
   },
   username: {
     type: String,
-    require: true
+    required: "Please enter a username.",
+    unique: true
   },
   hashPassword: {
     type: String,

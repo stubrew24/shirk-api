@@ -15,7 +15,7 @@ var upload = multer({ storage: storage }).single("avatar");
 
 export const authRoutes = app => {
   app.route("/login").post(userLogin);
-  app.route("/register").post(upload, addUser, userLogin);
+  app.route("/register").post(addUser, userLogin);
   app.route("/logout").get(logout);
   app.route("/uploadavatar").post(upload, uploadAvatar);
 };
