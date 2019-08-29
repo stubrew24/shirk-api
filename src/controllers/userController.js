@@ -15,7 +15,6 @@ export const getUsers = (req, res) => {
 };
 
 export const addUser = (req, res, next) => {
-  console.log(req.body);
   const newUser = new User(req.body);
   newUser.hashPassword = bcrypt.hashSync(req.body.password, 10);
 

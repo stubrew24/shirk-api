@@ -25,7 +25,12 @@ const Post = mongoose.model("post", PostSchema);
 let interval;
 
 app.use(helmet());
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(
+  cors({
+    credentials: true,
+    origin: ["http://localhost:3000", "https://shirk.netlify.com"]
+  })
+);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
